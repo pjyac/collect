@@ -43,6 +43,7 @@ def getVersionName = { ->
             switch (ant.properties.os) {
                 case 'windows':
                    // commandLine 'cmd', '/c', 'git', 'describe', '--tags', '--dirty', '--always'
+
                     break
                 case 'unix':
                     commandLine 'git', 'describe', '--tags', '--dirty', '--always'
