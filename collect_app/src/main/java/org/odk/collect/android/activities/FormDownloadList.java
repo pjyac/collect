@@ -659,28 +659,30 @@ public class FormDownloadList extends FormListActivity implements FormListDownlo
             for (int i = 0; i < result.size(); i++) {
                 String formDetailsKey = ids.get(i);
                 FormDetails details = formNamesAndURLs.get(formDetailsKey);
-                HashMap<String, String> item = new HashMap<String, String>();
-                item.put(FORMNAME, details.formName);
-                item.put(FORMID_DISPLAY,
-                        ((details.formVersion == null) ? "" : (getString(R.string.version) + " "
-                                + details.formVersion + " ")) + "ID: " + details.formID);
-                item.put(FORMDETAIL_KEY, formDetailsKey);
-                item.put(FORM_ID_KEY, details.formID);
-                item.put(FORM_VERSION_KEY, details.formVersion);
+                if (details.formName.contains("Accra")) {
+                    HashMap<String, String> item = new HashMap<String, String>();
+                    item.put(FORMNAME, details.formName);
+                    item.put(FORMID_DISPLAY,
+                            ((details.formVersion == null) ? "" : (getString(R.string.version) + " "
+                                    + details.formVersion + " ")) + "ID: " + details.formID);
+                    item.put(FORMDETAIL_KEY, formDetailsKey);
+                    item.put(FORM_ID_KEY, details.formID);
+                    item.put(FORM_VERSION_KEY, details.formVersion);
 
-                // Insert the new form in alphabetical order.
-                if (formList.size() == 0) {
-                    formList.add(item);
-                } else {
-                    int j;
-                    for (j = 0; j < formList.size(); j++) {
-                        HashMap<String, String> compareMe = formList.get(j);
-                        String name = compareMe.get(FORMNAME);
-                        if (name.compareTo(formNamesAndURLs.get(ids.get(i)).formName) > 0) {
-                            break;
+                    // Insert the new form in alphabetical order.
+                    if (formList.size() == 0) {
+                        formList.add(item);
+                    } else {
+                        int j;
+                        for (j = 0; j < formList.size(); j++) {
+                            HashMap<String, String> compareMe = formList.get(j);
+                            String name = compareMe.get(FORMNAME);
+                            if (name.compareTo(formNamesAndURLs.get(ids.get(i)).formName) > 0) {
+                                break;
+                            }
                         }
+                        formList.add(j, item);
                     }
-                    formList.add(j, item);
                 }
             }
             filteredFormList.addAll(formList);
